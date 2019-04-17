@@ -109,7 +109,11 @@ public class Graph
         finishingNumbers.add(1);
             
         //Perform the DFS on each unvisited vertex.
-        /*Replace this comment with the appropriate code.*/
+        for(int currentVertex = 0; currentVertex < vertexCount; currentVertex++)
+            if(finishingNumbers.get(currentVertex) == 0)
+                dfsHelper(currentVertex, dfsNumbers, finishingNumbers);
+
+        return(dfsNumbers);
     }
     
     //Recursive DFS helper method
@@ -117,37 +121,40 @@ public class Graph
                                               ArrayList<Integer> finishingNumbers)
     {
         //Visit the current vertex by setting its DFS number.
-        /*Replace this comment with the appropriate code.*/
+        dfsNumbers.set(currentVertex, dfsNumbers.get(vertexCount));
         
         //Increment the DFS-number counter.
-        /*Replace this comment with the appropriate code.*/
+        dfsNumbers.set(vertexCount, dfsNumbers.get(vertexCount) + 1);
         
         //March through the adjacency list of the current vertex.
-        for(/*Replace this comment with the appropriate code.*/)
+        for(int currentNode : adjacencyList[currentVertex])
         {
-            /*Replace this comment with the appropriate code.*/
+            int u = currentVertex;
+            int v = currentNode;
             
             //Identify and output edge types.
             System.out.print("(" + u + ", " + v + ") : ");
 
             //If v hasn't been visited yet...
-            if(/*Replace this comment with the appropriate code.*/)
+            if(dfsNumbers.get(v) == 0)
                 System.out.println("Tree Edge");
             //If v has been visited, but is not finished yet...    
-            else if(/*Replace this comment with the appropriate code.*/)
+            else if(dfsNumbers.get(v) != 0 && finishingNumbers.get(v) == 0)
                 System.out.println("Back Edge");
             //If v is visited and finished, but u was visited before v...
-            else if(/*Replace this comment with the appropriate code.*/)
+            else if((dfsNumbers.get(v) != 0 && finishingNumbers.get(v) != 0) && dfsNumbers.get(u) < dfsNumbers.get(v))
                 System.out.println("Forward Edge");
             //If v is visited and finished, but u was visited after v...
             else
                 System.out.println("Cross Edge");
             
             //If the adjacent vertex hasn't yet been visited, recursively do a DFS on it.
-            /*Replace this comment with the appropriate code.*/
+            if(dfsNumbers.get(v) == 0)
+                dfsHelper(v, dfsNumbers, finishingNumbers);
         }
         
         //The current vertex's adjacency list is now used up.  Set its finishing number and increment the counter.
-        /*Replace this comment with the appropriate code.*/
+        finishingNumbers.set(currentVertex, finishingNumbers.get(vertexCount) + 1);
+        finishingNumbers.set(vertexCount, finishingNumbers.get(vertexCount) + 1);
     }
 }
